@@ -10,8 +10,11 @@ services:        # 실행할 모든 컨테이너를 나열하는 섹션
     container_name: "catalog-service"
     ports:                      # 포트 매핑 목록을 위한 섹션
       - 9001:9001
+      - 8001:8001               # JVM이 디버그 연결을 듣는 포트
     environment:                # 환경 변수를 나열하는 섹션
       - BPL_JVM_THREAD_COUNT=50 # 메모리 계산을 위한 스레드의 수를 설정하는 패키도 빌드팩 환경 변수
+      - BPL_DEBUG_ENABLED=true  # 디버그 연결을 수락하기 위한 JVM 설정을 활성화 (빌드팩에 의해 제공)
+      - BPL_DEBUG_PORT=8001     # 디버그 연결은 8001 포트를 통해 받는다. (빌드팩에 의해 제공)
       - SPRING_DATASOURCE_URL=jdbc:postgresql://zun-postgres:5432/zundb_catalog
       - SPRING_PROFILES_ACTIVE=testdata
 
