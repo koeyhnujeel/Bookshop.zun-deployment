@@ -1,19 +1,18 @@
-version: "3.8"
-services:
+version: "3.8"   # 도커 컴포즈 구문 버전
+services:        # 실행할 모든 컨테이너를 나열하는 섹션
 
   # Applications
 
-  catalog-service:
+  catalog-service:      # catalog-service 컨테이너를 기술하는 섹션
     depends_on:
-      - zun-postgres
-    image: "catalog-service"
+      - zun-postgres            # 카탈로그 서비스는 PostgreSQL 데이터베이스 이후에 시작해야 한다.
+    image: "catalog-service"    # 컨테이너를 실행하는 데 사용할 이미지
     container_name: "catalog-service"
-    ports:
+    ports:                      # 포트 매핑 목록을 위한 섹션
       - 9001:9001
-    environment:
-      - BPL_JVM_THREAD_COUNT=50
-      - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://polar-postgres:5432/polardb_catalog
+    environment:                # 환경 변수를 나열하는 섹션
+      - BPL_JVM_THREAD_COUNT=50 # 메모리 계산을 위한 스레드의 수를 설정하는 패키도 빌드팩 환경 변수
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://zun-postgres:5432/zundb_catalog
       - SPRING_PROFILES_ACTIVE=testdata
 
   zun-postgres:
